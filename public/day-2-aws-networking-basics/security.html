@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta property="og:title" content="https://networking.aws-cloudops.com" />s
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://networking.aws-cloudops.com/" />
+    <meta property="og:image" content="https://networking.aws-cloudops.com/images/routericon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="description" content="Amazon CloudOps Networking Workshop">
+<meta name="author" content="Marine Haddad">
+
+    <link rel="icon" href="../images/favicon.png" type="image/png">
+
+    <title>Security in a VPC :: Amazon CloudOps Networking Workshop</title>
+
+    
+    <link href="../css/nucleus.css?1615889543" rel="stylesheet">
+    <link href="../css/all.css?1615889543" rel="stylesheet">
+    <link href="../css/hybrid.css?1615889543" rel="stylesheet">
+    <link href="../css/featherlight.min.css?1615889543" rel="stylesheet">
+    <link href="../css/perfect-scrollbar.min.css?1615889543" rel="stylesheet">
+    <link href="../css/auto-complete.css?1615889543" rel="stylesheet">
+    <link href="../css/theme.css?1615889543" rel="stylesheet">
+    <link href="../css/hugo-theme.css?1615889543" rel="stylesheet">
+    <link href="../css/jquery-ui.min.css?1615889543" rel="stylesheet">
+    
+      <link href="../css/theme-mine.css?1615889543" rel="stylesheet">
+    
+
+    <script src="../js/jquery-3.3.1.min.js?1615889543"></script>
+    <script src="../js/jquery-ui-1.12.1.min.js?1615889543"></script>
+
+
+    <style type="text/css">
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+        :not(pre) > code + span.copy-to-clipboard {
+            display: none;
+        }
+      
+    </style>
+    
+  </head>
+  <body class="" data-url="../day-2-aws-networking-basics/security.html">
+    <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a href="../" title="Go home"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 30" width="60%" style="padding:20px 0px;"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#f90;fill-rule:evenodd;}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"></path><path class="cls-2" d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"></path><path class="cls-2" d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"></path></svg></a>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../js/lunr.min.js?1615889543"></script>
+<script type="text/javascript" src="../js/auto-complete.js?1615889543"></script>
+<script type="text/javascript">
+    
+        var baseurl = "";
+    
+</script>
+<script type="text/javascript" src="../js/search.js?1615889543"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/introduction.html" title="Introduction" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../introduction.html">
+          Introduction
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/day-1-networking-foundations.html" title="Networking Fundamentals" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../day-1-networking-foundations.html">
+          Networking Fundamentals
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-1-networking-foundations/network-definition.html" title="What is a network?" class="dd-item ">
+        <a href="../day-1-networking-foundations/network-definition.html">
+        What is a network?
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-1-networking-foundations/osi-model.html" title="OSI Model" class="dd-item ">
+        <a href="../day-1-networking-foundations/osi-model.html">
+        OSI Model
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-1-networking-foundations/subnetting.html" title="Subnetting" class="dd-item ">
+        <a href="../day-1-networking-foundations/subnetting.html">
+        Subnetting
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-1-networking-foundations/routing.html" title="Routing" class="dd-item ">
+        <a href="../day-1-networking-foundations/routing.html">
+        Routing
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-1-networking-foundations/dnsdhcp.html" title="DNS/DHCP" class="dd-item ">
+        <a href="../day-1-networking-foundations/dnsdhcp.html">
+        DNS/DHCP
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-1-networking-foundations/homework.html" title="Homework" class="dd-item ">
+        <a href="../day-1-networking-foundations/homework.html">
+        Homework
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/day-2-aws-networking-basics.html" title="AWS Networking basics" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="../day-2-aws-networking-basics.html">
+          AWS Networking basics
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-2-aws-networking-basics/aws-infrastructure.html" title="AWS Infrastructure" class="dd-item ">
+        <a href="../day-2-aws-networking-basics/aws-infrastructure.html">
+        AWS Infrastructure
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-2-aws-networking-basics/whats-a-vpc.html" title="What is a VPC?" class="dd-item ">
+        <a href="../day-2-aws-networking-basics/whats-a-vpc.html">
+        What is a VPC?
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-2-aws-networking-basics/privatepublic.html" title="Private/Public concepts" class="dd-item ">
+        <a href="../day-2-aws-networking-basics/privatepublic.html">
+        Private/Public concepts
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-2-aws-networking-basics/security.html" title="Security in a VPC" class="dd-item active">
+        <a href="../day-2-aws-networking-basics/security.html">
+        Security in a VPC
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-2-aws-networking-basics/load-balancing.html" title="Elastic Load Balancing" class="dd-item ">
+        <a href="../day-2-aws-networking-basics/load-balancing.html">
+        Elastic Load Balancing
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-2-aws-networking-basics/lab.html" title="ELB LAB" class="dd-item ">
+        <a href="../day-2-aws-networking-basics/lab.html">
+        ELB LAB
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-2-aws-networking-basics/route53.html" title="Route53" class="dd-item ">
+        <a href="../day-2-aws-networking-basics/route53.html">
+        Route53
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/day-3-aws-advanced-networking.html" title="AWS Advanced Networking" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../day-3-aws-advanced-networking.html">
+          AWS Advanced Networking
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-3-aws-advanced-networking/hybrid-cloud.html" title="Hybrid Connectivity" class="dd-item ">
+        <a href="../day-3-aws-advanced-networking/hybrid-cloud.html">
+        Hybrid Connectivity
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-3-aws-advanced-networking/vpc-peering.html" title="VPC Peering" class="dd-item ">
+        <a href="../day-3-aws-advanced-networking/vpc-peering.html">
+        VPC Peering
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-3-aws-advanced-networking/lab.html" title="VPC Peering LAB" class="dd-item ">
+        <a href="../day-3-aws-advanced-networking/lab.html">
+        VPC Peering LAB
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-3-aws-advanced-networking/transit-gateway.html" title="Transit Gateway" class="dd-item ">
+        <a href="../day-3-aws-advanced-networking/transit-gateway.html">
+        Transit Gateway
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/day-3-aws-advanced-networking/vpc-endpoints.html" title="VPC Endpoints" class="dd-item ">
+        <a href="../day-3-aws-advanced-networking/vpc-endpoints.html">
+        VPC Endpoints
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/lab_diagram.html" title="Lab Architecture" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../lab_diagram.html">
+          Lab Architecture
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/further_reading.html" title="Further Reading" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../further_reading.html">
+          Further Reading
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/faq.html" title="FAQs" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../faq.html">
+          FAQs
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3>More</h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://www.linkedin.com/in/marine-haddad-38a542b5/"><i class='fab fa-linkedin fa-lg'></i> Marine Haddad</a>
+              </li>
+          
+              <li> 
+                  <a class="padding" href="https://www.linkedin.com/in/adrianna-kurzela-26b88210b/"><i class='fab fa-linkedin fa-lg'></i> Adrianna Kurzela</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="footer">
+      <left>
+
+    
+
+    <a href="https://aws.amazon.com/privacy/?nc1=f_pr">Privacy</a> | <a href="https://aws.amazon.com/terms/?nc1=f_pr">Site Terms</a> | © 2021, Amazon Web Services, Inc. or its affiliates. All rights reserved. 
+
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                  
+                  
+                  
+                  <div id="top-github-link">
+                    <a class="github-link" title='Edit this page' href="https://github.com/marinehadd/aws-cloudops-networking/edit/master/content/Day%202%20-%20AWS%20Networking%20basics/Security.md" target="blank">
+                      <i class="fas fa-code-branch"></i>
+                      <span id="top-github-link-text">Edit this page</span>
+                    </a>
+                  </div>
+                  
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='../'>Welcome to the Amazon CloudOps Networking Workshop!</a> > <a href='../day-2-aws-networking-basics.html'>AWS Networking basics</a> > Security in a VPC
+          
+         
+          
+         
+          
+           
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            
+
+        
+        <div id="body-inner">
+          
+            <h1>Security in a VPC</h1>
+          
+
+        
+
+
+<p>A <strong>security group</strong> is a virtual stateful firewall that controls inbound and outbound network traffic to AWS resources and Amazon EC2 instances. At AWS, security groups act like a built-in firewall for your virtual servers. With these security groups, you have full control about how accessible your instances are.
+At the most basic level, it is just another method to filter traffic to your instances. It provides you control about what traffic to allow or deny. To determine who has access to your instances, you configure a security group rule. Rules can vary from keeping the instance completely private, completely public, or somewhere in between.
+When you first configure a Security Group, all access is denied, so you need to add rules to allow traffic to flow.
+Security Groups are stateful, that means that anything that you allow to flow out of your instance is allowed by default to flow back in your instance.</p>
+<p>A <strong>Network access control list</strong> (network ACL) is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets.
+When you first configure a Network ACL, all access is allowed by default.
+NACL are stateless, that means that if you want to allow a type of traffic, you need to do it both for inbound and outbound.</p>
+<img src='../images/sg_nacl.png' width='600px'>
+<p>In summary, the Network ACL acts at the subnet level. The Security Groups acts at the instance level.</p>
+<h4>LAB 3:</h4>
+<p>Refer to <a href="../lab_diagram.html">Lab Architecture</a> for architecture.</p>
+<p><strong>Create a public instance:</strong></p>
+<ul>
+<li>Go to EC2 Services and click on <em>Launch Instance</em>
+<ul>
+<li>select the 1st Amazon Linux AMI from the list</li>
+<li>leave the Instance type as default and click <em>Next</em></li>
+<li>Set the below:
+<ul>
+<li>Network: choose your VPC</li>
+<li>Subnet: choose your public subnet</li>
+<li>Auto-assign Public IP: Select <em>Enable</em></li>
+<li>Leave the rest as default and go to the next page</li>
+</ul>
+</li>
+<li>Leave Storage as default and go to the next page</li>
+<li>In Tags, create a tag with <em>Key</em> : Name and <em>Value</em> : PublicEC2-&ldquo;YourInitials&rdquo;</li>
+<li>Leave the security group as default</li>
+<li>In the Review and Launch page, click <em>Launch</em> and select your KP that you created and stored locally during the Linux course</li>
+</ul>
+</li>
+</ul>
+<p>Let it spin up, and create your private instance in the meantime.</p>
+<p><strong>Create a private instance:</strong></p>
+<ul>
+<li>Go to EC2 Services and click on <em>Launch Instance</em>
+<ul>
+<li>select the 1st Amazon Linux AMI from the list</li>
+<li>leave the Instance type as default and click <em>Next</em></li>
+<li>Set the below:
+<ul>
+<li>Network: choose your VPC</li>
+<li>Subnet: choose your private subnet</li>
+<li>Auto-assign Public IP: Select <em>Disable</em></li>
+<li>Leave the rest as default and go to the next page</li>
+</ul>
+</li>
+<li>Leave Storage as default and go to the next page</li>
+<li>In Tags, create a tag with <em>Key</em> : Name and <em>Value</em> : PrivateEC2-&ldquo;YourInitials&rdquo;</li>
+<li>Leave the security group as default</li>
+<li>In the Review and Launch page, click <em>Launch</em> and select your KP that you created and stored locally during the Linux course
+<em><strong>If you deleted your key pair, just create a new one and download it.</strong></em></li>
+</ul>
+</li>
+</ul>
+<p>Now you should have 1 public instance and 1 private instance. In the EC2 interface, if you select them one by one and look at the bottom panel, you should see all details about the instances.
+Notice that your public EC2 has a public IPv4 address as well as a public DNS name, on the opposite of the private EC2 that only has private addresses.</p>
+<p><strong>Edit the Security Group:</strong></p>
+<ul>
+<li>On the public EC2 bottom panel, select the Security tab. The only rule allowed is SSH on port 22 from anywhere (o.o.o.o/0). Even if we want this instance to be publicly reachable, we do not want everyone to SSH into it and change configuration.</li>
+<li>Click on the Security Group and <em>Edit Inbound rules</em>
+<ul>
+<li>set the <em>Source</em> as <em>My IP</em> and in parallel, verify that it matches your IP address by typing <em><strong>whatsmyip</strong></em> in another browser tab</li>
+<li>Add a new rule with Type as <em>All ICMP - IPv4</em> and Source as your IP again</li>
+<li><em>Save rules</em></li>
+</ul>
+</li>
+</ul>
+<p>Now that we have SSH and ICMP traffic allowed from our IP address, it means only you will be able to connect only on these specific ports to the instance.</p>
+<p>SSH (port 22) is the protocol used to login to your instance&rsquo;s CLI.
+ICMP (no port number) is the protocol used to communicate between instances at the network level. For example, we use the command <em>ping</em> to test connectivity from one instance to another, and this command uses ICMP protocol.</p>
+<p>We will not be using NACL today as it is not required in this context, but you can have a look at the default one by going to VPC Services -&gt; Subnets -&gt; Network ACL (bottom panel).</p>
+<p><strong>Test public connectivity to your public instance:</strong></p>
+<ul>
+<li>open a terminal window and <em>ping</em> the public IP address of your instance ( <em>ping X.X.X.X</em> )</li>
+<li>Try to login to your instance (refer to <a href="https://linuxworkshop.aws-cloudops.com/2.logging_in.html">https://linuxworkshop.aws-cloudops.com/2.logging_in.html</a> if you need the steps to use your key pair to login)</li>
+</ul>
+<p>If you do the same test on the private IP address of this same instance (public instance), you will notice that all traffic is blocked.</p>
+<p>We cannot do the same with the private instance since there is no public IP, you can try to SSH to its private IP to prove that it is not reachable.
+A way to SSH into it would be to setup a Bastion instance. This instance is a public instance that just acts as a jump box in order to connect to private instances securely. Despite being public, this instance would also have a private IP address belonging to that same VPC, therefore routable to the private subnet of the private instance.</p>
+<p><strong>Cleanup:</strong></p>
+<p>You can keep this setup to work on different labs and/or play around with the AWS resources.</p>
+<p>If not, don&rsquo;t forget to cleanup your setup by deleting resources in the reverse order of the lab steps.</p>
+
+
+<footer class=" footline" >
+	
+</footer>
+
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../day-2-aws-networking-basics/privatepublic.html" title="Private/Public concepts"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../day-2-aws-networking-basics/load-balancing.html" title="Elastic Load Balancing" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../js/clipboard.min.js?1615889543"></script>
+    <script src="../js/perfect-scrollbar.min.js?1615889543"></script>
+    <script src="../js/perfect-scrollbar.jquery.min.js?1615889543"></script>
+    <script src="../js/jquery.sticky.js?1615889543"></script>
+    <script src="../js/featherlight.min.js?1615889543"></script>
+    <script src="../js/highlight.pack.js?1615889543"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../js/modernizr.custom-3.6.0.js?1615889543"></script>
+    <script src="../js/learn.js?1615889543"></script>
+    <script src="../js/hugo-learn.js?1615889543"></script>
+
+    <link href="../mermaid/mermaid.css?1615889543" rel="stylesheet" />
+    <script src="../mermaid/mermaid.js?1615889543"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+
+  </body>
+</html>
+
