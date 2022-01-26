@@ -13,15 +13,15 @@ hrefTargetBlank = true
 [params]
 themeVariant = "mine"
 showVisitedLinks = false
-author = "Marine Haddad"
+author = "Marine Haddad, Sam Baruffi, Adrianna Kurzela"
 description = "Amazon CloudOps Networking Workshop"
 disableSearch = false
 disableAssetsBusting = false
 disableLanguageSwitchingButton = true
 disableShortcutsTitle=false
 disableInlineCopyToClipBoard = true
-editURL = "https://github.com/marinehadd/aws-cloudops-networking/edit/master/content/" # Add github URL
-baseURL = "https://networking.aws-cloudops.com/index.html"
+editURL = "https://github.com/dixonaws/aws-cloudops-networking/edit/main/content/" # Add github URL
+baseURL = "https://network-workshop.aws-cloudops.com/index.html"
 
 #
 
@@ -53,14 +53,6 @@ identifier = "li3"
 url = "https://www.linkedin.com/in/samuelbaruffi/"
 weight = 2
 Email = "sbaruffi@amazon.com"
-
-
-# Deploy to S3 + CloudFront
-[deployment]
-  [[deployment.targets]]
-    name = "S3"
-    URL = "s3://cloudops-s3-website?region=eu-west-1"
-    cloudFrontDistributionID = "E2G13Z9GIV62G1"
 
 
 [markup.goldmark.renderer]
