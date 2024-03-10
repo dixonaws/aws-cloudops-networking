@@ -15,8 +15,11 @@ A **Network access control list** (network ACL) is an optional layer of security
 When you first configure a Network ACL, all access is allowed by default.
 NACL are stateless, that means that if you want to allow a type of traffic, you need to do it both for inbound and outbound.
 
+<!-- this file seems to have disappeared
+
 <img src='../images/sg_nacl.png' width='600px'>
 
+-->
 
 In summary, the Network ACL acts at the subnet level. The Security Groups acts at the instance level.
 
