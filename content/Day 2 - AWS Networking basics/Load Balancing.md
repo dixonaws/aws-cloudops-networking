@@ -18,9 +18,12 @@ There are currently 3 types of a load balancer:
   
   
   •  Network Load Balancer
+
+
+  •  Gateway Load Balancer
+
   
-  
-  •  Classic Load Balancer
+  •  Classic Load Balancer (previous generation)
 
 <img src='../images/elb.png' width='600px'>
 
@@ -32,8 +35,9 @@ When you setup an application load balancer, you are only provided with its DNS 
 **Network Load Balancer** - The network load balancer works at the transport level (L4 in the OSI model) and in most cases, is used when high performance is required. Let's say you know you'll get thousands of requests per second, then the network load balancer might be a good option.
 One advantage, depending on the context, of a network load balancer is that it is provided a static IP address (that will not change).
 
+**Gateway Load Balancer** - Gateway Load Balancers are out of scope for this course. You'd use one when you need to deploy and manage a fleet of third-party virtual appliances that support GENEVE. These appliances enable you to improve security, compliance, and policy controls.
 
-**Classic Load Balancer** - A classic load balancer works both at L4 and L7 of the OSI model, but has limited features.
+**Classic Load Balancer** - A classic load balancer works both at L4 and L7 of the OSI model, but has limited features. It is considered "previous generation" and is not recommended for new deployments.
 
 
 

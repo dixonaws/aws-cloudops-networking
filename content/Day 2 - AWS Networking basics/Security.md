@@ -38,7 +38,7 @@ Refer to [Lab Architecture](/lab_diagram.html) for architecture.
     + Leave Storage as default and go to the next page
     + In Tags, create a tag with *Key* : Name and *Value* : PublicEC2-"YourInitials"
     + Leave the security group as default
-    + In the Review and Launch page, click *Launch* and select your KP that you created and stored locally during the Linux course
+    + In the Review and Launch page, click *Launch* and select your PK that you created and stored locally during the Linux course
 
 Let it spin up, and create your private instance in the meantime.
 
