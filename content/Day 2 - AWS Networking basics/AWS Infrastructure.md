@@ -6,7 +6,7 @@ weight: 20
 
 AWS currently has 33 regions in its [global infrastructure](https://aws.amazon.com/about-aws/global-infrastructure/). A region is a physical location around the world where data centers are clustered. These data centers are grouped in Availability Zones. Each AWS Region consists of multiple, isolated, and physically separate AZ's within a geographic area. There are 105 Availability Zones. 
 
-<img src='/images/global_footprint.png' width='700px'>
+<img src='/images/global_footprint - 2024-03.png' width='700px'>
 
 
 AWS is responsible of protecting this infrastructure according to the _Shared Responsibility Model_:
