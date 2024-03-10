@@ -32,7 +32,7 @@ AWS reserves 5 IPs by default within each subnet:
 - the last IP : broadcast address
 
 So, if our subnet is 10.10.1.0/24, the following IPs will be reserved:
-- 10.10.0.0
+- 10.10.1.0
 - 10.10.1.1
 - 10.10.1.2
 - 10.10.1.3
